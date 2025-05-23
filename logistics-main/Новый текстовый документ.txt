@@ -1,0 +1,43 @@
+CREATE TABLE Vehicles (
+    vehicle_id INT PRIMARY KEY AUTO_INCREMENT,
+    registration_number VARCHAR(20) UNIQUE NOT NULL,
+    brand VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    year_of_manufacture INT,
+    vehicle_type ENUM('грузовик', 'фура', 'рефрижератор', 'цистерна', 'контейнеровоз', 'площадка') NOT NULL,
+    load_capacity_kg DECIMAL(10,2),
+    volume_capacity_m3 DECIMAL(10,2),
+    fuel_type ENUM('дизель', 'бензин', 'газ', 'электричество', 'гибрид'),
+    fuel_consumption DECIMAL(5,2),
+    status ENUM('доступен', 'в рейсе', 'на ТО', 'в ремонте', 'списан') DEFAULT 'доступен',
+    current_location VARCHAR(100),
+    last_maintenance_date DATE,
+    next_maintenance_date DATE,
+    insurance_number VARCHAR(50),
+    insurance_expiry DATE,
+    purchase_date DATE,
+    purchase_price DECIMAL(12,2),
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+INSERT INTO transport_types (name, description, base_rate) VALUES
+('Газель', 'Маленький грузовик до 1.5 тонн', 25.00),
+('Камаз', 'Большой грузовик до 10 тонн', 40.00),
+('Фура', 'Тягач с полуприцепом до 20 тонн', 60.00),
+('Рефрижератор', 'Холодильная установка', 70.00);
+
+-- Добавляем маршруты
+INSERT INTO routes (start_point, end_point, distance_km, estimated_time_hours) VALUES
+('Москва', 'Санкт-Петербург', 700, 10.5),
+('Москва', 'Казань', 800, 12.0),
+('Санкт-Петербург', 'Новосибирск', 3500, 48.0),
+('Краснодар', 'Ростов-на-Дону', 300, 5.0);
+
+-- Добавляем дополнительные услуги
+INSERT INTO additional_services (name, description, price) VALUES
+('Погрузка', 'Услуги грузчиков', 1500.00),
+('Разгрузка', 'Услуги грузчиков', 1500.00),
+('Упаковка', 'Упаковка груза', 2000.00),
+('Страховка', 'Страхование груза', 1.5), -- % от стоимости груза
+('Экспресс-доставка', 'Приоритетная доставка', 5000.00);
